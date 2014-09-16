@@ -1,5 +1,6 @@
 library(plyr)
 library(dplyr)
+library(tidyr)
 
 ## Step 0: Load variable names and clean them up a bit for easier use
 feat <- read.table("features.txt")
@@ -64,3 +65,8 @@ dt_2<-ddply(dt,.(subject,activity),numcolwise(mean))
 dt_3 <- gather(dt,variable,value,-subject:-activity) %>% 
   group_by(subject, activity,variable) %>% 
   summarize(mean(value))
+###############################################################################
+
+## Create text file
+
+write.table(dt_3,file="tidy_data.txt",row.name=F)

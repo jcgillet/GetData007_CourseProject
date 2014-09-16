@@ -13,11 +13,16 @@ There are four available variables in the second tidy dataset:
 
 Code description
 ================
-The code is divided in six parts.
+The code is divided in five parts.
+
 First, we load the required libraries. We then load the names of the features, which will enable us to do some quick selection in step 1, and we immediately get rid of pairs of brackets "()" for better readability.
+
 Then, we try to perform steps 1 and 2. I chose to read the two tables separately, and then filter the interesting columns directly, as that enables us to limit our memory usage. I also chose to filter the pure means and standard deviations, getting rid of the angles (filtering out "angle") and the weighted average of frequency components (filtering out "Freq"). We can then bind the to datasets together using rbind() and append the subjects to the table. We then get rid of intermediary variables that only clug up the system.
+
 We then move on to step 3. for this, we bind the two activity datasets together, make a link between the activity identifiers and their description, and finally append the descriptions to the working dataset.
+
 In step 4, we first reorder the variables to make subject and activity the first ones available. We then substitute "t" and "f" for "time" and "frequential", capitalize "mean" and "std", get rid of dots and duplicate names, and finally make the calculation the last part of the name by exchanging the axis and the calculation names. We then apply the result to the columns of the dataset.
+
 Finally, in step 5, we first calculate the mean of each column for a given subject-activity couple. We then Make the 66 columns into rows for easier reading by gathering. Thus, we get the 4 variables mentioned above and export them to a text file, after renaming the last 4 columns.
 
 Note: I chose not to perform the gathering before step 5, because 10299*66=679734 rows seemed like a lot to me, and I preferred to keep the column-based layout for the first dataset, even if that didn't satisfy me much intellectually.

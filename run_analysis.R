@@ -55,18 +55,22 @@ cols <- gsub("BodyBody","Body",cols)
 cols <- gsub("\\.","",cols)
 cols <- gsub("(StdDev|Mean)(.)","\\2\\1",cols)
 
+names(dt) <- cols
+
 ###############################################################################
 
 ## Step 5: create a second, independent tidy data set with the average of each
 ##         variable for each activity and each subject.
 
-dt_2<-ddply(dt,.(subject,activity),numcolwise(mean))
+temp_dt<-ddply(dt,.(subject,activity),numcolwise(mean))
 
-dt_3 <- gather(dt,variable,value,-subject:-activity) %>% 
+dt_2 <- gather(dt,variable,value,-subject:-activity) %>% 
   group_by(subject, activity,variable) %>% 
-  summarize(mean(value))
+  summarize(mean = mean(value))
+
+names(dt) <- c("Subject","Activity","Feature","Mean")
 ###############################################################################
 
 ## Create text file
 
-write.table(dt_3,file="tidy_data.txt",row.name=F)
+write.table(dt_2,file="tidy_data.txt",row.name=F)
